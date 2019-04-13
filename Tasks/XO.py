@@ -4,9 +4,10 @@ board = [[1, 2, 3],
 
 # Prints the board
 def printBoard():
-    for x in board:
-        print(x)
-    print("\n")
+    print("-------------")
+    for x in range(0,3):
+        print("|",board[x][0],"|",board[x][1],"|",board[x][2],"|")
+        print("-------------")
 
 # Reset the game board after restarting another game
 def resetBoard():
@@ -15,6 +16,30 @@ def resetBoard():
              [4, 5, 6],
              [7, 8, 9]]
 
+# Checks if the player's choice is already taken
+def isTaken(choice):
+    if choice > 0 and choice < 4:
+        if board[0][choice-1] == 'X' or board[0][choice-1] == 'O':
+            return True
+
+    if choice > 3 and choice < 7:
+        if board[1][choice-4] == 'X' or board[1][choice-4] == 'O':
+            return True
+
+    if choice > 6 and choice < 10:
+        if board[2][choice-7] == 'X' or board[2][choice-7] == 'O':
+            return True
+
+# Places the player's mark on the board
+def placeMark(choice, player):
+    if choice > 0 and choice < 4:
+        board[0][choice-1] = player
+
+    if choice > 3 and choice < 7:
+        board[1][choice-4] = player
+
+    if choice > 6 and choice < 10:
+        board[2][choice-7] = player
 
 def checkBoard():
     # Checking rows
@@ -32,7 +57,6 @@ def checkBoard():
         return True
     if board[2][0] == board[1][1] and board[2][0] == board[0][2]:
         return True
-
 
 # 2 counters for X wins and O wins
 xWins = 0
@@ -55,18 +79,11 @@ def startGame():
             player = 'O'
             choice = (int)(input("Player ' O ' enter number: "))
 
-        while choice < 1 or choice > 9:
+        while choice < 1 or choice > 9 or isTaken(choice):  # Checks for invalid player choices
             print("Invalid choice. Player ' " + player + " ' enter number: ")
             choice = (int)(input())
-
-        if choice > 0 and choice < 4:
-            board[0][choice-1] = player
-
-        if choice > 3 and choice < 7:
-            board[1][choice-4] = player
-
-        if choice > 6 and choice < 10:
-            board[2][choice-7] = player
+        
+        placeMark(choice, player) # Places the player's choice on the board
 
         printBoard()
         countMoves += 1

@@ -1,9 +1,12 @@
+import os
+
 board = [[1, 2, 3],
          [4, 5, 6],
          [7, 8, 9]]
 
 # Prints the board
 def printBoard():
+    os.system('cls')
     print("-------------")
     for x in range(0,3):
         print("|",board[x][0],"|",board[x][1],"|",board[x][2],"|")
@@ -75,9 +78,11 @@ def startGame():
         if countMoves % 2 == 0:
             player = 'X'
             choice = (int)(input("Player ' X ' enter number: "))
+            print("\n")
         else:
             player = 'O'
             choice = (int)(input("Player ' O ' enter number: "))
+            print("\n")
 
         while choice < 1 or choice > 9 or isTaken(choice):  # Checks for invalid player choices
             print("Invalid choice. Player ' " + player + " ' enter number: ")
@@ -108,6 +113,8 @@ def startGame():
         startGame()
     else:
         print("---GAME OVER---")
+        print("---VICTORY: 'X' HAS WON", xWins, "TIMES---")
+        print("---VICTORY: 'O' HAS WON", oWins, "TIMES---")
 
 
 startGame()
